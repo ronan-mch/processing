@@ -1,14 +1,21 @@
 class Mover {
   PVector location;
   PVector velocity;
+  PVector acceleration;
+  float topspeed;
 
   Mover() {
-    location = new PVector(random(width), random(height));
-    velocity = new PVector(random(-2, 2), random(-2, 2));
+    location = new PVector(width/2, height/2);
+    velocity = new PVector(0,0);
+    topspeed = 10;
+    acceleration = new PVector(-0.001,0.01);
   }
 
   void update() {
+    velocity.add(acceleration);
+    velocity.limit(topspeed);
     location.add(velocity);
+    println(velocity);
   }
 
   void display(){
@@ -33,20 +40,17 @@ class Mover {
 
 }
 
-Mover mover1;
-Mover mover2;
+Mover mover;
+
 
 void setup() {
-  mover1 = new Mover();
-  mover2 = new Mover();
+  mover = new Mover();
+  size(640, 360);
 }
 
 void draw() {
   background(255);
-  mover1.update();
-  mover1.checkEdges();
-  mover1.display();
-  mover2.update();
-  mover2.checkEdges();
-  mover2.display();
+  mover.update();
+  mover.checkEdges();
+  mover.display();
 }
